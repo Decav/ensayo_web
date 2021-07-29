@@ -11,23 +11,23 @@ document.querySelector("#registrar-btn").addEventListener("click", async() =>{
     if(patente === ""){
         errores.push("Debe ingresar una patente");
     }else{
-        let negocios = await getNegocio();
-        let negocioEncontrada = negocios.find(c=>c.patente.toLowerCase() === patente.toLowerCase());
-        if(negocioEncontrada != undefined){
-            errores.push("La negocio ya existe");
+        let productos = await getproducto();
+        let productoEncontrada = productos.find(c=>c.patente.toLowerCase() === patente.toLowerCase());
+        if(productoEncontrada != undefined){
+            errores.push("El producto ya existe");
         }
     }
 
     if(errores.length == 0){
-        let negocio = {};
-        negocio.patente = patente;
-        negocio.nombre = nombre;
-        negocio.direccion = direccion;
-        negocio.numero = numero;
+        let producto = {};
+        producto.patente = patente;
+        producto.nombre = nombre;
+        producto.direccion = direccion;
+        producto.numero = numero;
 
         
-        let resultado = await crearNegocios(negocio);
-        await Swal.fire("negocio creado", "negocio creada exitosamente", "success");
+        let resultado = await crearproductos(producto);
+        await Swal.fire("producto creado", "producto creado exitosamente", "success");
     }else{
         Swal.fire({
             title: "Errores de validacion",
@@ -35,4 +35,23 @@ document.querySelector("#registrar-btn").addEventListener("click", async() =>{
             html: errores.join("<br />")
         });
     }
+});
+
+
+document.querySelector("#registrar2-btn").addEventListener("click", async() =>{
+    let nombre = document.querySelector("#nombre-txt").value.trim();
+    let stock = document.querySelector("#stock-txt").value.trim();
+    let precio = document.querySelector("#precio-txt").value.trim();
+    
+    
+    
+    let producto = {};
+    producto.nombre = nombre;
+    producto.stock = stock;
+    producto.precio = precio;
+
+    
+    let resultado = await crearProducto(producto);
+    await Swal.fire("producto creado", "producto creado exitosamente", "success");
+
 });

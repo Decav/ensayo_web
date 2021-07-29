@@ -24,4 +24,12 @@ class NegociosController extends Controller
         $negocio = Negocio::all();
         return $negocio;
     }
+
+    public function eliminarNegocio(Request $request){
+        $input = $request->all();
+        $id = $input["id"];
+        $negocio = Negocio::findOrFail($id);
+        $negocio->delete();
+        return "ok";
+    }
 }

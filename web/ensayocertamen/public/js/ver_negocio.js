@@ -1,3 +1,27 @@
+
+
+const iniciarEliminacion = async function(){
+    let id = this.idNegocios;
+    let resp = await Swal.fire({title:"Esta seguro?",text:"Esta operacion es irreversible"
+    , icon:"error",showCancelButton:true});
+    if(resp.isConfirmed){
+        Swal.fire("La persona quiere eliminar");
+        if(await eliminarNegocio(id)){
+            let Negocios = await getNegocio();
+            cargarTabla(Negocios);
+            Swal.fire("Negocio eliminado", "Negocio eliminado exitosamente", "info");
+        }else{
+            Swal.fire("Error", "No se pudo atender la solicitud", "error");
+        }
+    }else{
+        Swal.fire("Cancelado", "Cancelado a peticion del usuario", "info");
+    }
+}
+
+
+
+
+
 const cargarTabla = (negocios) =>{
     let tbody = document.querySelector("#tbody-negocio");
     tbody.innerHTML = "";
@@ -19,7 +43,8 @@ const cargarTabla = (negocios) =>{
         botonEliminar.innerText = "Eliminar";
         botonEliminar.classList.add("btn","btn-danger");
         botonEliminar.idNegocios = negocios[i].id;
-
+        botonEliminar.addEventListener("click", iniciarEliminacion);
+        
         tr.appendChild(tdPatente);
         tr.appendChild(tdNombre);
         tr.appendChild(tdDireccion);

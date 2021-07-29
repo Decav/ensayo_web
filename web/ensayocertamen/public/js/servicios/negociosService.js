@@ -15,3 +15,17 @@ const crearNegocios = async(negocio)=>{
     });
     return respuesta.data;
 };
+
+const eliminarNegocio = async(id)=>{
+    try{
+        let respuesta = await axios.post("api/negocios/delete", {id},{
+            headers:{
+                'Content-Type': 'application/json'
+            }
+        })
+        return respuesta.data == "ok";
+    }catch(e){
+        return false;
+    }
+    
+}
